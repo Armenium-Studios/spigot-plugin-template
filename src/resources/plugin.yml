@@ -1,0 +1,13 @@
+name: SpigotPluginTemplate
+main: com.armeniumstudios.plugintemplate.SpigotPluginTemplate
+version: "0.1.0"
+api-version: 1.16
+author: Armenium
+description: Spigot Template
+website: www.armeniumstudios.com
+depends: []
+commands:
+  language:
+    description: "Allows you to change your language"
+    usage: /language
+    aliases: [locale, lang]

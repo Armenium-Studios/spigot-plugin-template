@@ -1,0 +1,9 @@
+language:
+  current: "Your language is currently set to \"%s\"."
+  not_found: "Sorry, but the language \"%s\" is not supported."
+  supported_list: "The following languages are currently supported: %s"
+  set: "Set your language to \"%s\"!"
+general:
+  invalid_syntax: "Invalid command syntax. \"%s\""
+  unknown_error: "An unknown error occurred. Please try again later!"
+  player_only: "Sorry, but you need to be a player to run this command."
