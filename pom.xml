@@ -95,6 +95,13 @@
                             <goal>run</goal>
                         </goals>
                         <configuration>
+                            <delete>
+                                <fileset dir="../abc-server/plugins">
+                                    <include name="${project.artifactId}-*.jar" />
+                                    <exclude name="${project.build.finalName}.jar" />
+                                </fileset>
+                            </delete>
+                            
                             <target>
                                 <copy
                                     file="${project.build.directory}/${project.build.finalName}-jar-with-dependencies.jar"
