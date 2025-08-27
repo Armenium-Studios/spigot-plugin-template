@@ -90,17 +90,23 @@ public class LocaleManager {
     }
 
     private static YamlConfiguration getConfig(String fileName) {
-        //Get default properties for this configuration file
-        String defaultFileName = "messages/" + PluginUtilities.getDefaultLanguage() + ".yml";
+        boolean langDoesNotExist = false;
+
+        // Get default properties for this configuration file
+        String defaultFileName = "messages/" + fileName + ".yml";
+        if (plugin.getResource(defaultFileName) != null) {
+            defaultFileName = "messages/" + PluginUtilities.getDefaultLanguage() + ".yml";
+            langDoesNotExist = true;
+        }
         Reader defaultsReader = new InputStreamReader(plugin.getResource(defaultFileName), StandardCharsets.UTF_8);
         YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(defaultsReader);
 
-        //Get the file in the plugin's data folder
+        // Get the file in the plugin's data folder
         File file = new File(plugin.getDataFolder() + "/" + defaultFileName);
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
 
         if (!file.exists()) {
-            //If file doesn't exist, set defaults and create it
+            // If file doesn't exist, set defaults and create it
             try {
                 config.setDefaults(defaultConfig);
                 config.save(file);
@@ -109,10 +115,11 @@ public class LocaleManager {
                 e.printStackTrace();
             }
         } else {
-            //Check if any properties are missing by comparing it with the default file
+            // Check if any properties are missing by comparing it with the default file
             boolean changed = false;
             for (Map.Entry<String, Object> entry : defaultConfig.getValues(true).entrySet()) {
-                if (!config.contains(entry.getKey())) {
+                if (!config.contains(entry.getKey())
+                        || (!langDoesNotExist && !config.getString(entry.getKey()).equals(entry.getValue()))) {
                     config.set(entry.getKey(), entry.getValue());
                     changed = true;
                 }
